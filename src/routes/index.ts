@@ -3,13 +3,12 @@ const router = Router();
 
 import { getOrders, getOrderById, createOrder, updateOrder, deleteOrder } from '../controllers/index.controller';
 
-/*router.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.send('<h1>This is the main /</h1>');
     console.log("Database_URL", process.env.DATABASE_URL);
     getOrders
-});*/
-router.get('/', getOrders);
-//router.get('/orders', getOrders);
+});
+router.get('/orders', getOrders);
 router.get('/orders/:id', getOrderById);
 router.post('/orders', createOrder);
 router.put('/orders/:id', updateOrder)
