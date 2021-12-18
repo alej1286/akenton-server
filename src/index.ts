@@ -1,8 +1,13 @@
 import express, { Application} from 'express';
 import indexRoutes from './routes/index';
+require('dotenv').config()
+const cors = require('cors')
+
+
 const app: Application = express();
 
 // middlewares
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
