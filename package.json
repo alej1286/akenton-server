@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "engines": {
-    "node": "16.13.1"
-  },
   "scripts": {
     "server": "concurrently \"tsc --watch\" \"nodemon dist/index.js \"",
     "build": "tsc",
