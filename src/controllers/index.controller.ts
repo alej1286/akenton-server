@@ -13,6 +13,17 @@ export const getOrders = async (req: Request, res: Response): Promise<Response> 
     }
 };
 
+export const getTipos = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const response: QueryResult = await
+            pool.query('SELECT * FROM tipo ORDER BY id ASC');
+        return res.status(200).json(response.rows);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal Server error');
+    }
+};
+
 export const getOrderById = async (req: Request, res: Response): Promise<Response> => {
     const id = parseInt(req.params.id);
     const response: QueryResult = await pool.query('SELECT * FROM orders WHERE id = $1', [id]);
