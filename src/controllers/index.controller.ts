@@ -45,7 +45,7 @@ export const updateOrder = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const { descr, tipo, pallets } = req.body;
 
-    const response = await pool.query('UPDATE orders SET descr = $1, tipo = $2, pallet = $3 WHERE id = $4', [
+    const response = await pool.query('UPDATE orders SET descr = $1, tipo = $2, pallets = $3 WHERE id = $4', [
         descr, tipo, pallets, id
     ]);
     res.json('Order Updated Successfully');
