@@ -24,6 +24,17 @@ export const getTipos = async (req: Request, res: Response): Promise<Response> =
     }
 };
 
+export const getEstados = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const response: QueryResult = await
+            pool.query('SELECT * FROM estado ORDER BY id ASC');
+        return res.status(200).json(response.rows);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal Server error');
+    }
+};
+
 export const getClients = async (req: Request, res: Response): Promise<Response> => {
     try {
         const response: QueryResult = await
@@ -41,6 +52,12 @@ export const getTipoById = async (req: Request, res: Response): Promise<Response
     return res.json(response.rows);
 };
 
+export const getEstadoById = async (req: Request, res: Response): Promise<Response> => {
+    const id = parseInt(req.params.id);
+    const response: QueryResult = await pool.query('SELECT * FROM estado WHERE id = $1', [id]);
+    return res.json(response.rows);
+};
+
 export const getClientById = async (req: Request, res: Response): Promise<Response> => {
     const id = parseInt(req.params.id);
     const response: QueryResult = await pool.query('SELECT * FROM client WHERE id = $1', [id]);
@@ -54,12 +71,13 @@ export const getOrderById = async (req: Request, res: Response): Promise<Respons
 };
 
 export const createOrder = async (req: Request, res: Response) => {
-    const { descr, tipo, pallets } = req.body;
-    const response = await pool.query('INSERT INTO orders (client, tipo, pallets, descr) VALUES ($1, $2, $3, $4)', [descr, tipo, pallets]);
+    const { client, tipo, pallets, recogida, descr,estado } = req.body;
+    const response = await pool.query('INSERT INTO orders (client, tipo, pallets, recogida, descr) VALUES ($1, $2, $3, $4, $5, $6)', [client, tipo, pallets, recogida, descr,estado]);
     res.json({
         message: 'Order Added successfully',
         body: {
-            user: { descr, tipo, pallets }
+            order: { client, tipo, pallets, recogida, descr, estado },
+            response : {response}
         }
     })
 };
@@ -68,7 +86,18 @@ export const createTipo = async (req: Request, res: Response) => {
     const { descr } = req.body;
     const response = await pool.query('INSERT INTO tipo (descr) VALUES ($1)', [descr]);
     res.json({
-        message: 'Order Added successfully',
+        message: 'Tipo Added successfully',
+        body: {
+            tipo: { descr }
+        }
+    })
+};
+
+export const createEstado = async (req: Request, res: Response) => {
+    const { descr } = req.body;
+    const response = await pool.query('INSERT INTO estado (descr) VALUES ($1)', [descr]);
+    res.json({
+        message: 'Estado Added successfully',
         body: {
             tipo: { descr }
         }
@@ -79,7 +108,7 @@ export const createClient = async (req: Request, res: Response) => {
     const { nombre } = req.body;
     const response = await pool.query('INSERT INTO client (nombre) VALUES ($1)', [nombre]);
     res.json({
-        message: 'Order Added successfully',
+        message: 'Client Added successfully',
         body: {
             client: { nombre }
         }
@@ -106,6 +135,17 @@ export const updateTipo = async (req: Request, res: Response) => {
     res.json('Tipo Updated Successfully');
 };
 
+
+export const updateEstado = async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id);
+    const { descr } = req.body;
+
+    const response = await pool.query('UPDATE estado SET descr = $1 WHERE id = $2', [
+         descr ,id
+    ]);
+    res.json('Estado Updated Successfully');
+};
+
 export const updateClient = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const { nombre } = req.body;
@@ -130,6 +170,14 @@ export const deleteTipo = async (req: Request, res: Response) => {
         id
     ]);
     res.json(`tipo ${id} deleted Successfully`);
+};
+
+export const deleteEstado = async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id);
+    await pool.query('DELETE FROM estado where id = $1', [
+        id
+    ]);
+    res.json(`Estado ${id} deleted Successfully`);
 };
 
 export const deleteClient = async (req: Request, res: Response) => {

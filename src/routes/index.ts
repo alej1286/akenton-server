@@ -1,7 +1,7 @@
 import {Router} from 'express';
 const router = Router();
 
-import { getOrders, getOrderById, createOrder, updateOrder, deleteOrder, getTipos, getTipoById, createTipo, updateTipo, deleteTipo, getClients, getClientById, createClient, updateClient, deleteClient } from '../controllers/index.controller';
+import { getOrders, getOrderById, createOrder, updateOrder, deleteOrder, getTipos, getTipoById, createTipo, updateTipo, deleteTipo, getClients, getClientById, createClient, updateClient, deleteClient, getEstados, getEstadoById, createEstado, updateEstado, deleteEstado } from '../controllers/index.controller';
 
 router.get('/', (req, res) => {
     res.send('<h1>This is the main /</h1>');
@@ -19,6 +19,12 @@ router.get('/tipos/:id', getTipoById);
 router.post('/tipos', createTipo);
 router.put('/tipos/:id', updateTipo)
 router.delete('/tipos/:id', deleteTipo);
+
+router.get('/estados', getEstados);
+router.get('/estados/:id', getEstadoById);
+router.post('/estados', createEstado);
+router.put('/estados/:id', updateEstado)
+router.delete('/estados/:id', deleteEstado);
 
 router.get('/clients', getClients);
 router.get('/clients/:id', getClientById);
