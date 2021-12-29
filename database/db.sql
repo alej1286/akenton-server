@@ -23,7 +23,7 @@ CREATE TABLE estado(
     descr VARCHAR(40)
 );
 
-INSERT INTO estado (descr) VALUES ('En Proceso'),('Terminado'),('Recodigo');
+INSERT INTO estado (descr) VALUES ('En Proceso'),('Terminado'),('Recogido');
 
 DROP TABLE IF EXISTS client CASCADE;
 
