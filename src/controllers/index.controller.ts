@@ -117,10 +117,10 @@ export const createClient = async (req: Request, res: Response) => {
 
 export const updateOrder = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
-    const { client, tipo, pallets, descr } = req.body;
+    const { client, tipo, pallets, descr, recogida, estado } = req.body;
 
-    const response = await pool.query('UPDATE orders SET client = $1, tipo = $2, pallets = $3, descr = $4 WHERE id = $5', [
-        client, tipo, pallets, descr ,id
+    const response = await pool.query('UPDATE orders SET client = $1, tipo = $2, pallets = $3, descr = $4, recogida = $6, estado = $7 WHERE id = $5', [
+        client, tipo, pallets, descr ,id, recogida, estado
     ]);
     res.json('Order Updated Successfully');
 };
