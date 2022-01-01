@@ -256,7 +256,7 @@ export const updateInventory = async (req: Request, res: Response) => {
   const { nombre, in_stock, notify } = req.body;
 
   const response = await pool.query(
-    "UPDATE client SET nombre = $1,in_stock = $3,notify = $4 WHERE id = $2",
+    "UPDATE inventory SET nombre = $1,in_stock = $3,notify = $4 WHERE id = $2",
     [nombre, id, in_stock, notify]
   );
   res.json("Inventory Updated Successfully");
