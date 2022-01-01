@@ -1,7 +1,7 @@
 import {Router} from 'express';
 const router = Router();
 
-import { getOrders, getOrderById, createOrder, updateOrder, deleteOrder, getTipos, getTipoById, createTipo, updateTipo, deleteTipo, getClients, getClientById, createClient, updateClient, deleteClient, getEstados, getEstadoById, createEstado, updateEstado, deleteEstado, getInventories, getInventoryById, createInventory, updateInventory, deleteInventory } from '../controllers/index.controller';
+import { getOrders, getOrderById, createOrder, updateOrder, deleteOrder, getTipos, getTipoById, createTipo, updateTipo, deleteTipo, getClients, getClientById, createClient, updateClient, deleteClient, getEstados, getEstadoById, createEstado, updateEstado, deleteEstado, getInventories, getInventoryById, createInventory, updateInventory, deleteInventory, getProduccion, getProduccionById, createProduccion, updateProduccion, deleteProduccion } from '../controllers/index.controller';
 
 router.get('/', (req, res) => {
     res.send('<h1>This is the main /</h1>');
@@ -37,5 +37,12 @@ router.get('/inventories/:id', getInventoryById);
 router.post('/inventories', createInventory);
 router.put('/inventories/:id', updateInventory)
 router.delete('/inventories/:id', deleteInventory);
+
+router.get('/produccion', getProduccion);
+router.get('/produccion/:id', getProduccionById);
+router.post('/produccion', createProduccion);
+router.put('/produccion/:id', updateProduccion)
+router.delete('/produccion/:id', deleteProduccion);
+
 
 export default router;
