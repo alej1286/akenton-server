@@ -291,3 +291,69 @@ export const deleteInventory = async (req: Request, res: Response) => {
   await pool.query("DELETE FROM inventory where id = $1", [id]);
   res.json(`inventory ${id} deleted Successfully`);
 };
+
+
+
+//---------
+
+export const getProduccion = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
+    try {
+      const response: QueryResult = await pool.query(
+        "SELECT * FROM produccion ORDER BY id ASC"
+      );
+      return res.status(200).json(response.rows);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json("Internal Server error");
+    }
+  };
+  
+  
+  export const getProduccionById = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
+    const id = parseInt(req.params.id);
+    const response: QueryResult = await pool.query(
+      "SELECT * FROM produccion WHERE id = $1",
+      [id]
+    );
+    return res.json(response.rows);
+  };
+  
+  export const createProduccion = async (req: Request, res: Response) => {
+    const { ordern,tipo,cantidad,inicio,fin,descr } =
+      req.body;
+    const response = await pool.query(
+      "INSERT INTO produccion (ordern,tipo,cantidad,inicio,fin,descr) VALUES ($1, $2, $3, $4, $5, $6)",
+      [ordern,tipo,cantidad,inicio,fin,descr]
+    );
+    res.json({
+      message: "Produccion Added successfully",
+      body: {
+        produccion: { ordern,tipo,cantidad,inicio,fin,descr },
+        response: { response },
+      },
+    });
+  };
+  
+  export const updateProduccion = async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id);
+    const { ordern,tipo,cantidad,inicio,fin,descr } =
+      req.body;
+  
+    const response = await pool.query(
+      "UPDATE produccion SET ordern = $1, tipo = $2, cantidad = $3, inicio = $4, fin = $6, descr = $7 WHERE id = $8",
+      [ordern,tipo,cantidad,inicio,fin,descr,id]
+    );
+    res.json("produccion Updated Successfully");
+  };
+  
+  export const deleteProduccion = async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id);
+    await pool.query("DELETE FROM produccion where id = $1", [id]);
+    res.json(`produccion ${id} deleted Successfully`);
+  };

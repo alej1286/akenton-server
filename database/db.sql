@@ -77,3 +77,27 @@ INSERT INTO orders(client, tipo, cantidad, recogida, terminada, descr, estado)
             (5,1, 12,'2021-12-25 19:10:25-07', '2021-12-02 19:10:25-07','Descrpcion',1);
 
 select * from orders;
+
+
+DROP TABLE IF EXISTS produccion CASCADE;
+
+CREATE TABLE produccion (
+    id SERIAL PRIMARY KEY,
+    ordern integer,
+    tipo integer,
+    cantidad integer,
+    inicio timestamp default NULL,
+    fin timestamp default NULL,
+    descr VARCHAR(40),
+    CONSTRAINT fk_tipo_produccion FOREIGN KEY(tipo) REFERENCES tipo(id),
+    CONSTRAINT fk_order_produccion FOREIGN KEY(ordern) REFERENCES orders(id)
+);
+
+INSERT INTO produccion(ordern, tipo, cantidad, inicio, fin, descr)
+    VALUES  (1,1, 4, '2021-12-02 19:10:25-07', '2021-12-02 19:10:25-07','Descrpcion'),
+            (2,2, 9, '2021-12-12 19:10:25-07', '2021-12-02 19:10:25-07','Descrpcion sds'),
+            (3,3, 8, '2021-12-21 19:10:25-07', '2021-12-02 19:10:25-07','Descrpcionsdsdf'),
+            (4,2, 3, '2021-12-22 19:10:25-07', '2021-12-02 19:10:25-07','Descrpcion'),
+            (5,1, 12,'2021-12-25 19:10:25-07', '2021-12-02 19:10:25-07','Descrpcion');
+
+select * from produccion;
