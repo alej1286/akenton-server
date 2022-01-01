@@ -71,12 +71,12 @@ export const getOrderById = async (req: Request, res: Response): Promise<Respons
 };
 
 export const createOrder = async (req: Request, res: Response) => {
-    const { client, tipo, pallets, recogida, descr,estado } = req.body;
-    const response = await pool.query('INSERT INTO orders (client, tipo, pallets, recogida, descr) VALUES ($1, $2, $3, $4, $5, $6)', [client, tipo, pallets, recogida, descr,estado]);
+    const { client, tipo, cantidad, recogida, descr,estado } = req.body;
+    const response = await pool.query('INSERT INTO orders (client, tipo, cantidad, recogida, descr) VALUES ($1, $2, $3, $4, $5, $6)', [client, tipo, cantidad, recogida, descr,estado]);
     res.json({
         message: 'Order Added successfully',
         body: {
-            order: { client, tipo, pallets, recogida, descr, estado },
+            order: { client, tipo, cantidad, recogida, descr, estado },
             response : {response}
         }
     })
@@ -117,10 +117,10 @@ export const createClient = async (req: Request, res: Response) => {
 
 export const updateOrder = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
-    const { client, tipo, pallets, descr, recogida, estado } = req.body;
+    const { client, tipo, cantidad, descr, recogida, estado } = req.body;
 
-    const response = await pool.query('UPDATE orders SET client = $1, tipo = $2, pallets = $3, descr = $4, recogida = $6, estado = $7 WHERE id = $5', [
-        client, tipo, pallets, descr ,id, recogida, estado
+    const response = await pool.query('UPDATE orders SET client = $1, tipo = $2, cantidad = $3, descr = $4, recogida = $6, estado = $7 WHERE id = $5', [
+        client, tipo, cantidad, descr ,id, recogida, estado
     ]);
     res.json('Order Updated Successfully');
 };

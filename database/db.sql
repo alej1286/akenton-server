@@ -40,7 +40,7 @@ CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     client integer,
     tipo integer,
-    pallets integer,
+    cantidad integer,
     recogida timestamp default NULL,
     descr VARCHAR(40),
     estado integer,
@@ -49,7 +49,7 @@ CREATE TABLE orders (
     CONSTRAINT fk_estado_order FOREIGN KEY(estado) REFERENCES estado(id)
 );
 
-INSERT INTO orders(client, tipo, pallets, recogida, descr, estado)
+INSERT INTO orders(client, tipo, cantidad, recogida, descr, estado)
     VALUES  (1,1, 4, '2021-12-02 19:10:25-07','Descrpcion',1),
             (2,2, 9, '2021-12-12 19:10:25-07','Descrpcion sds',1),
             (3,3, 8, '2021-12-21 19:10:25-07','Descrpcionsdsdf',1),
