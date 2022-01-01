@@ -62,6 +62,21 @@ export const getClients = async (
   }
 };
 
+export const getInventories = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const response: QueryResult = await pool.query(
+      "SELECT * FROM inventory ORDER BY id ASC"
+    );
+    return res.status(200).json(response.rows);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json("Internal Server error");
+  }
+};
+
 export const getTipoById = async (
   req: Request,
   res: Response
@@ -93,6 +108,18 @@ export const getClientById = async (
   const id = parseInt(req.params.id);
   const response: QueryResult = await pool.query(
     "SELECT * FROM client WHERE id = $1",
+    [id]
+  );
+  return res.json(response.rows);
+};
+
+export const getInventoryById = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const id = parseInt(req.params.id);
+  const response: QueryResult = await pool.query(
+    "SELECT * FROM inventory WHERE id = $1",
     [id]
   );
   return res.json(response.rows);
@@ -165,6 +192,20 @@ export const createClient = async (req: Request, res: Response) => {
   });
 };
 
+export const createInventory = async (req: Request, res: Response) => {
+  const { nombre, in_stock, notify } = req.body;
+  const response = await pool.query(
+    "INSERT INTO client (nombre,in_stock, notify) VALUES ($1,$2,$3)",
+    [nombre, in_stock, notify]
+  );
+  res.json({
+    message: "Inventory Added successfully",
+    body: {
+      inventory: { nombre, in_stock, notify },
+    },
+  });
+};
+
 export const updateOrder = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   const { client, tipo, cantidad, descr, recogida, estado, terminada } =
@@ -210,6 +251,17 @@ export const updateClient = async (req: Request, res: Response) => {
   res.json("Client Updated Successfully");
 };
 
+export const updateInventory = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const { nombre, in_stock, notify } = req.body;
+
+  const response = await pool.query(
+    "UPDATE client SET nombre = $1,in_stock = $3,notify = $4 WHERE id = $2",
+    [nombre, id, in_stock, notify]
+  );
+  res.json("Inventory Updated Successfully");
+};
+
 export const deleteOrder = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   await pool.query("DELETE FROM orders where id = $1", [id]);
@@ -232,4 +284,10 @@ export const deleteClient = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   await pool.query("DELETE FROM client where id = $1", [id]);
   res.json(`client ${id} deleted Successfully`);
+};
+
+export const deleteInventory = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  await pool.query("DELETE FROM inventory where id = $1", [id]);
+  res.json(`inventory ${id} deleted Successfully`);
 };

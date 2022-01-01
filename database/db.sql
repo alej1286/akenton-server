@@ -34,6 +34,25 @@ CREATE TABLE client(
 
 INSERT INTO client (nombre) VALUES ('Kasim'),('GP'),('Amazon'),('Publix'),('Sedano');
 
+DROP TABLE IF EXISTS inventory CASCADE;
+
+CREATE TABLE inventory (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(40),
+    in_stock integer,
+    notify integer
+);
+
+INSERT INTO inventory(nombre, in_stock, notify)
+    VALUES  ('Big Bag Azucar',20, 10),
+            ('Cajas',20, 10),
+            ('Bolsas 1,5Lb',20, 10),
+            ('Bolsas 3Lb',20, 10),
+            ('Bolsas 5Lb',20, 10),
+            ('Pallets',20, 10);
+
+select * from inventory;
+
 DROP TABLE IF EXISTS orders CASCADE;
 
 CREATE TABLE orders (
