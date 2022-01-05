@@ -325,16 +325,16 @@ export const getProduccion = async (
   };
   
   export const createProduccion = async (req: Request, res: Response) => {
-    const { ordern,tipo,cantidad,inicio,fin,descr } =
+    const { ordern,tipo,cantidad,inicio,fin,descr,bigbag } =
       req.body;
     const response = await pool.query(
-      "INSERT INTO produccion (ordern,tipo,cantidad,inicio,fin,descr) VALUES ($1, $2, $3, $4, $5, $6)",
-      [ordern,tipo,cantidad,inicio,fin,descr]
+      "INSERT INTO produccion (ordern,tipo,cantidad,inicio,fin,descr,bigbag) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+      [ordern,tipo,cantidad,inicio,fin,descr,bigbag]
     );
     res.json({
       message: "Produccion Added successfully",
       body: {
-        produccion: { ordern,tipo,cantidad,inicio,fin,descr },
+        produccion: { ordern,tipo,cantidad,inicio,fin,descr, bigbag },
         response: { response },
       },
     });
@@ -342,12 +342,12 @@ export const getProduccion = async (
   
   export const updateProduccion = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
-    const { ordern,tipo,cantidad,inicio,fin,descr } =
+    const { ordern,tipo,cantidad,inicio,fin,descr, bigbag } =
       req.body;
   
     const response = await pool.query(
-      "UPDATE produccion SET ordern = $1, tipo = $2, cantidad = $3, inicio = $4, fin = $6, descr = $7 WHERE id = $8",
-      [ordern,tipo,cantidad,inicio,fin,descr,id]
+      "UPDATE produccion SET ordern = $1, tipo = $2, cantidad = $3, inicio = $4, fin = $6, descr = $7, bigbag = $8 WHERE id = $8",
+      [ordern,tipo,cantidad,inicio,fin,descr,id, bigbag]
     );
     res.json("produccion Updated Successfully");
   };
@@ -357,3 +357,69 @@ export const getProduccion = async (
     await pool.query("DELETE FROM produccion where id = $1", [id]);
     res.json(`produccion ${id} deleted Successfully`);
   };
+
+  //----------------------------------------
+  
+//---------
+
+export const getBigbag = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const response: QueryResult = await pool.query(
+      "SELECT * FROM bigbag ORDER BY id ASC"
+    );
+    return res.status(200).json(response.rows);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json("Internal Server error");
+  }
+};
+
+
+export const getBigbagById = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const id = parseInt(req.params.id);
+  const response: QueryResult = await pool.query(
+    "SELECT * FROM bigbag WHERE id = $1",
+    [id]
+  );
+  return res.json(response.rows);
+};
+
+export const createBigbag = async (req: Request, res: Response) => {
+  const { id, inicio, fin, client } =
+    req.body;
+  const response = await pool.query(
+    "INSERT INTO bigbag (id, inicio, fin, client) VALUES ($1, $2, $3, $4)",
+    [id, inicio, fin, client]
+  );
+  res.json({
+    message: "Bigbag Added successfully",
+    body: {
+      bigbag: { id, inicio, fin, client },
+      response: { response },
+    },
+  });
+};
+
+export const updateBigbag = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const {inicio, fin, client } =
+    req.body;
+
+  const response = await pool.query(
+    "UPDATE bigbag SET inicio = $2, fin = $3, client = $4 WHERE id = $1",
+    [id, inicio, fin, client]
+  );
+  res.json("bigbag Updated Successfully");
+};
+
+export const deletebigbag = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  await pool.query("DELETE FROM bigbag where id = $1", [id]);
+  res.json(`bigbag ${id} deleted Successfully`);
+};
