@@ -141,7 +141,7 @@ export const createOrder = async (req: Request, res: Response) => {
   const { client, tipo, cantidad, recogida, descr, estado, terminada } =
     req.body;
   const response = await pool.query(
-    "INSERT INTO orders (client, tipo, cantidad, recogida, descr, terminada) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+    "INSERT INTO orders (client, tipo, cantidad, recogida, descr, estado, terminada) VALUES ($1, $2, $3, $4, $5, $6, $7)",
     [client, tipo, cantidad, recogida, descr, estado, terminada]
   );
   res.json({

@@ -15,7 +15,7 @@ CREATE TABLE tipo(
     descr VARCHAR(40)
 );
 
-INSERT INTO tipo (descr) VALUES ('1.5Lbs Nat'),('1.5Lbs Org'),('3Lbs Nat'),('5Lbs Nat'),('2.7Lbs Org');
+INSERT INTO tipo (descr) VALUES ('Bolsa 1.5Lbs Nat'),('Bolsa 1.5Lbs Org'),('Bolsa 3Lbs Nat'),('Bolsa 5Lbs Nat'),('Bolsa 2.7Lbs Org'),('Caja 1.5Lbs Nat'),('Caja 1.5Lbs Org'),('Caja 3Lbs Nat'),('Caja 5Lbs Nat'),('Caja 2.7Lbs Org'),('Pallet 1.5Lbs Nat'),('Pallet 1.5Lbs Org'),('Pallet 3Lbs Nat'),('Pallet 5Lbs Nat'),('Pallet 2.7Lbs Org');
 
 DROP TABLE IF EXISTS estado CASCADE;
 
