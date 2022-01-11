@@ -292,74 +292,72 @@ export const deleteInventory = async (req: Request, res: Response) => {
   res.json(`inventory ${id} deleted Successfully`);
 };
 
-
-
 //---------
 
 export const getProduccion = async (
-    req: Request,
-    res: Response
-  ): Promise<Response> => {
-    try {
-      const response: QueryResult = await pool.query(
-        "SELECT * FROM produccion ORDER BY id ASC"
-      );
-      return res.status(200).json(response.rows);
-    } catch (e) {
-      console.log(e);
-      return res.status(500).json("Internal Server error");
-    }
-  };
-  
-  
-  export const getProduccionById = async (
-    req: Request,
-    res: Response
-  ): Promise<Response> => {
-    const id = parseInt(req.params.id);
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
     const response: QueryResult = await pool.query(
-      "SELECT * FROM produccion WHERE id = $1",
-      [id]
+      "SELECT * FROM produccion ORDER BY id ASC"
     );
-    return res.json(response.rows);
-  };
-  
-  export const createProduccion = async (req: Request, res: Response) => {
-    const { ordern,tipo,cantidad,inicio,fin,descr,bigbag } =
-      req.body;
-    const response = await pool.query(
-      "INSERT INTO produccion (ordern,tipo,cantidad,inicio,fin,descr,bigbag) VALUES ($1, $2, $3, $4, $5, $6, $7)",
-      [ordern,tipo,cantidad,inicio,fin,descr,bigbag]
-    );
-    res.json({
-      message: "Produccion Added successfully",
-      body: {
-        produccion: { ordern,tipo,cantidad,inicio,fin,descr, bigbag },
-        response: { response },
-      },
-    });
-  };
-  
-  export const updateProduccion = async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
-    const { ordern,tipo,cantidad,inicio,fin,descr, bigbag } =
-      req.body;
-  
-    const response = await pool.query(
-      "UPDATE produccion SET ordern = $1, tipo = $2, cantidad = $3, inicio = $4, fin = $6, descr = $7, bigbag = $8 WHERE id = $8",
-      [ordern,tipo,cantidad,inicio,fin,descr,id, bigbag]
-    );
-    res.json("produccion Updated Successfully");
-  };
-  
-  export const deleteProduccion = async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
-    await pool.query("DELETE FROM produccion where id = $1", [id]);
-    res.json(`produccion ${id} deleted Successfully`);
-  };
+    return res.status(200).json(response.rows);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json("Internal Server error");
+  }
+};
 
-  //----------------------------------------
-  
+export const getProduccionById = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const id = parseInt(req.params.id);
+  const response: QueryResult = await pool.query(
+    "SELECT * FROM produccion WHERE id = $1",
+    [id]
+  );
+  return res.json(response.rows);
+};
+
+export const createProduccion = async (req: Request, res: Response) => {
+  const { ordern, tipo, cantidad, inicio, fin, descr, bigbag } = req.body;
+  const response = await pool.query(
+    "INSERT INTO produccion (ordern,tipo,cantidad,inicio,fin,descr,bigbag) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+    [ordern, tipo, cantidad, inicio, fin, descr, bigbag]
+  );
+  res.json({
+    message: "Produccion Added successfully",
+    body: {
+      produccion: { ordern, tipo, cantidad, inicio, fin, descr, bigbag },
+      response: { response },
+    },
+  });
+
+  substractFromInventory(tipo,cantidad);
+
+};
+
+export const updateProduccion = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const { ordern, tipo, cantidad, inicio, fin, descr, bigbag } = req.body;
+
+  const response = await pool.query(
+    "UPDATE produccion SET ordern = $1, tipo = $2, cantidad = $3, inicio = $4, fin = $6, descr = $7, bigbag = $8 WHERE id = $8",
+    [ordern, tipo, cantidad, inicio, fin, descr, id, bigbag]
+  );
+  res.json("produccion Updated Successfully");
+};
+
+export const deleteProduccion = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  await pool.query("DELETE FROM produccion where id = $1", [id]);
+  res.json(`produccion ${id} deleted Successfully`);
+};
+
+//----------------------------------------
+
 //---------
 
 export const getBigbag = async (
@@ -377,7 +375,6 @@ export const getBigbag = async (
   }
 };
 
-
 export const getBigbagById = async (
   req: Request,
   res: Response
@@ -391,8 +388,7 @@ export const getBigbagById = async (
 };
 
 export const createBigbag = async (req: Request, res: Response) => {
-  const { id, inicio, fin, client } =
-    req.body;
+  const { id, inicio, fin, client } = req.body;
   const response = await pool.query(
     "INSERT INTO bigbag (id, inicio, fin, client) VALUES ($1, $2, $3, $4)",
     [id, inicio, fin, client]
@@ -408,8 +404,7 @@ export const createBigbag = async (req: Request, res: Response) => {
 
 export const updateBigbag = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  const {inicio, fin, client } =
-    req.body;
+  const { inicio, fin, client } = req.body;
 
   const response = await pool.query(
     "UPDATE bigbag SET inicio = $2, fin = $3, client = $4 WHERE id = $1",
@@ -422,4 +417,80 @@ export const deletebigbag = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   await pool.query("DELETE FROM bigbag where id = $1", [id]);
   res.json(`bigbag ${id} deleted Successfully`);
+};
+
+export const substractFromInventory = async (
+  tipoCont: number,
+  cantTipoCont: number,
+ // tipoProduct: number
+) => {
+  if (tipoCont === 1) {
+    //Bolsa 1.5Lbs Nat
+  }
+
+  if (tipoCont === 2) {
+    //Bolsa 1.5Lbs Org
+  }
+
+  if (tipoCont === 3) {
+    //Bolsa 3Lbs Nat
+  }
+
+  if (tipoCont === 4) {
+    //Bolsa 5Lbs Nat
+  }
+
+  if (tipoCont === 5) {
+    //Pomo 2.7Lbs Org
+  }
+
+  if (tipoCont === 6) {
+    //Caja 1.5Lbs Nat
+  }
+
+  if (tipoCont === 7) {
+    //Caja 1.5Lbs Org
+  }
+
+  if (tipoCont === 8) {
+    //Caja 3Lbs Nat
+  }
+
+  if (tipoCont === 9) {
+    //Caja 5Lbs Nat
+  }
+
+  if (tipoCont === 10) {
+    //Caja de Pomos 2.7Lbs Org
+  }
+
+  if (tipoCont === 11) {
+    //Pallet 1.5Lbs Nat
+    for (let index = 0; index < cantTipoCont; index++) {
+      //Pallet
+      await pool.query("UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 10", [cantTipoCont]);
+      
+      //Cajas
+      await pool.query("UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2", [cantTipoCont*80]);
+      
+      //bolsas 1.5Lb
+      await pool.query("UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 3", [cantTipoCont*80*12]);
+    }
+  }
+
+  if (tipoCont === 12) {
+    //Pallet 1.5Lbs Org
+  }
+
+  if (tipoCont === 13) {
+    //Pallet 3Lbs Nat
+  }
+
+  if (tipoCont === 14) {
+    //Pallet 5Lbs Nat
+  }
+
+  if (tipoCont === 15) {
+    //Pallet 2.7Lbs Org
+  }
 };

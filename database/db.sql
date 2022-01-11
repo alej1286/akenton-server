@@ -1,3 +1,28 @@
+/* //delete a backup
+heroku pg:backups:delete b101 --app foo
+
+//info sobre backups
+heroku pg:backups --app akenton-server
+
+//Realizar un backup
+heroku pg:backups:capture --app akenton-server
+
+//Descargar un backup
+heroku pg:backups:download --app akenton-server
+
+//Get url del backup
+heroku pg:backups:url b001 --app akenton-server
+
+//upload the downloaded backups to the local database
+
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d akenton latest.dump
+
+//access heroku client
+heroku pg:psql postgresql-adjacent-95182 --app akenton-server
+
+
+ */
+
 /* https://elements.heroku.com/addons/heroku-postgresql */
 /* connect to Heroku terminal */
 heroku pg:psql --app akenton-server
@@ -44,17 +69,17 @@ CREATE TABLE inventory (
     notify integer
 );
 
-INSERT INTO inventory(nombre, in_stock, notify)
-    VALUES  ('Big Bag',20, 10),
-            ('Cajas',20, 10),
-            ('Bolsas 1,5Lb Nat',20, 10),
-            ('Bolsas 1,5Lb Org',20, 10),
-            ('Bolsas 3Lb Nat',20, 10),
-            ('Bolsas 5Lb Nat',20, 10),
-            ('Pomos',20, 10),
-            ('Etiquetas Pomos',20, 10),
-            ('Tapas Pomos',20, 10),
-            ('Pallets',20, 10);
+INSERT INTO inventory(id,nombre, in_stock, notify)
+    VALUES  (1,'Big Bag',20, 10),
+            (2,'Cajas',1000, 1000),
+            (3,'Bolsas 1,5Lb Nat',720, 720),
+            (4,'Bolsas 1,5Lb Org',720, 720),
+            (5,'Bolsas 3Lb Nat',648, 648),
+            (6,'Bolsas 5Lb Nat',240, 240),
+            (7,'Pomos',20, 540),
+            (8,'Etiquetas Pomos',540, 540),
+            (9,'Tapas Pomos',540, 540),
+            (10,'Pallets',20, 10);
 
 select * from inventory;
 
