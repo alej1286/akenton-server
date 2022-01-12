@@ -335,8 +335,7 @@ export const createProduccion = async (req: Request, res: Response) => {
     },
   });
 
-  substractFromInventory(tipo,cantidad);
-
+  substractFromInventory(tipo, cantidad);
 };
 
 export const updateProduccion = async (req: Request, res: Response) => {
@@ -421,76 +420,276 @@ export const deletebigbag = async (req: Request, res: Response) => {
 
 export const substractFromInventory = async (
   tipoCont: number,
-  cantTipoCont: number,
- // tipoProduct: number
+  cantTipoCont: number
+  // tipoProduct: number
 ) => {
   if (tipoCont === 1) {
     //Bolsa 1.5Lbs Nat
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Bolsas 1.5Lb Nat
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 3",
+        [cantTipoCont]
+      );
+    //}
   }
 
   if (tipoCont === 2) {
     //Bolsa 1.5Lbs Org
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Bolsas 1.5Lb Org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 4",
+        [cantTipoCont]
+      );
+    //}
   }
 
   if (tipoCont === 3) {
     //Bolsa 3Lbs Nat
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Bolsas 3Lb Org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 5",
+        [cantTipoCont]
+      );
+    //}
   }
 
   if (tipoCont === 4) {
     //Bolsa 5Lbs Nat
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Bolsas 5Lb Org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 6",
+        [cantTipoCont]
+      );
+    //}
   }
 
   if (tipoCont === 5) {
     //Pomo 2.7Lbs Org
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Pomos 2.7Lb Org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 7",
+        [cantTipoCont]
+      );
+    //}
   }
 
   if (tipoCont === 6) {
     //Caja 1.5Lbs Nat
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Caja
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont]
+      );
+      //Bolsas 1.5Lb Nat
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 3",
+        [cantTipoCont * 12]
+      );
+    //}
   }
 
   if (tipoCont === 7) {
     //Caja 1.5Lbs Org
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Caja
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont]
+      );
+      //Bolsas 1.5Lb Org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 4",
+        [cantTipoCont * 12]
+      );
+    //}
   }
 
   if (tipoCont === 8) {
     //Caja 3Lbs Nat
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Caja
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont]
+      );
+      //Bolsas 3Lb Org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 5",
+        [cantTipoCont * 9]
+      );
+    //}
   }
 
   if (tipoCont === 9) {
     //Caja 5Lbs Nat
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Caja
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont]
+      );
+      //Bolsas 5Lb Org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 6",
+        [cantTipoCont * 4]
+      );
+    //}
   }
 
   if (tipoCont === 10) {
     //Caja de Pomos 2.7Lbs Org
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Caja
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont]
+      );
+      //Pomos 2.7Lb Org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 7",
+        [cantTipoCont * 6]
+      );
+      //tapas de Pomos 2.7Lb Org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 9",
+        [cantTipoCont * 6]
+      );
+      //etiquetas de Pomos 2.7Lb Org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 8",
+        [cantTipoCont * 6]
+      );
+    //}
   }
 
   if (tipoCont === 11) {
     //Pallet 1.5Lbs Nat
-    for (let index = 0; index < cantTipoCont; index++) {
+    //for (let index = 0; index < cantTipoCont; index++) {
       //Pallet
-      await pool.query("UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 10", [cantTipoCont]);
-      
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 10",
+        [cantTipoCont]
+      );
+
       //Cajas
-      await pool.query("UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2", [cantTipoCont*80]);
-      
-      //bolsas 1.5Lb
-      await pool.query("UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 3", [cantTipoCont*80*12]);
-    }
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont * 80]
+      );
+
+      //bolsas 1.5Lb nat
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 3",
+        [cantTipoCont * 80 * 12]
+      );
+    //}
   }
 
   if (tipoCont === 12) {
     //Pallet 1.5Lbs Org
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Pallet
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 10",
+        [cantTipoCont]
+      );
+
+      //Cajas
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont * 80]
+      );
+
+      //bolsas 1.5Lb org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 4",
+        [cantTipoCont * 80 * 12]
+      );
+    //}
   }
 
   if (tipoCont === 13) {
     //Pallet 3Lbs Nat
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Pallet
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 10",
+        [cantTipoCont]
+      );
+
+      //Cajas
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont * 72]
+      );
+
+      //bolsas 3Lb org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 5",
+        [cantTipoCont * 72 * 9]
+      );
+    //}
   }
 
   if (tipoCont === 14) {
     //Pallet 5Lbs Nat
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Pallet
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 10",
+        [cantTipoCont]
+      );
+
+      //Cajas
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont * 60]
+      );
+
+      //bolsas 5Lb nat
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 6",
+        [cantTipoCont * 60 * 4]
+      );
+    //}
   }
 
   if (tipoCont === 15) {
     //Pallet 2.7Lbs Org
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Pallet
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 10",
+        [cantTipoCont]
+      );
+
+      //Cajas
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont * 90]
+      );
+
+      //pomos 2.7Lb org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 7",
+        [cantTipoCont * 90 * 6]
+      );
+      //etiquetas de pomos 2.7Lb org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 8",
+        [cantTipoCont * 90 * 6]
+      );
+      //tapas de pomos 2.7Lb org
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 9",
+        [cantTipoCont * 90 * 6]
+      );
+    //}
   }
 };
