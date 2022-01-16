@@ -436,6 +436,20 @@ export const decreaseBigbag = async (
   //res.json(`bigbag decreased Successfully`);
 }
 
+export const getBigbagInStock = async (
+  req: Request, res: Response
+) => {
+
+  const response3: QueryResult = await pool.query(
+    "select in_stock from inventory where id = 1"
+  );
+
+  return res.json(response3.rows);
+  //res.json(`bigbag decreased Successfully`);
+}
+
+
+
 export const substractFromInventory = async (
   tipoCont: number,
   cantTipoCont: number
