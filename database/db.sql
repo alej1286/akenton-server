@@ -147,3 +147,16 @@ INSERT INTO produccion(ordern, tipo, cantidad, inicio, fin, descr, bigbag)
             (5,1, 12,'2021-12-25 19:10:25-07', '2021-12-02 19:10:25-07','Desc5',1);
 
 select * from produccion;
+
+DROP TABLE IF EXISTS variables CASCADE;
+
+CREATE TABLE variables (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(40),
+    val integer
+);
+
+INSERT INTO variables(nombre, val)
+    VALUES  ('bigbag',1);
+
+select * from variables;
