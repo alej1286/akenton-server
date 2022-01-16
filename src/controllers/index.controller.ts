@@ -428,11 +428,7 @@ export const decreaseBigbag = async (
     "select * from variables where id = 1"
   );
 
-  const response3: QueryResult = await pool.query(
-    "select in_stock from inventory where id = 1"
-  );
-
-  return res.json(response3.rows);
+  return res.json(response2.rows);
   //res.json(`bigbag decreased Successfully`);
 }
 
