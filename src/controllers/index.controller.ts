@@ -421,9 +421,11 @@ export const deletebigbag = async (req: Request, res: Response) => {
 export const decreaseBigbag = async (
   req: Request, res: Response
 ) => {
-  return await pool.query(
+  const response: QueryResult = await pool.query(
     "UPDATE inventory SET in_stock = in_stock - 1 WHERE id = 1;UPDATE variables SET val = val + 1 WHERE id = 1;select * from variables where id = 1"
   );
+
+  return res.json(response.rows);
   //res.json(`bigbag decreased Successfully`);
 }
 
