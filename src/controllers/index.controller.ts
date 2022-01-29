@@ -756,7 +756,7 @@ export const getWeekProductionStat = async (
     obj.labels.push(m.format('ddd'));
     
     const response: QueryResult = await pool.query(
-      "select count(*) as bb from (select bigbag from produccion where inicio=$1)",
+      "select count(*) from (select bigbag from produccion where inicio=$1) as bb",
     [m.format('YYYY-MM-DD')]
     );
 
