@@ -727,9 +727,9 @@ export const substractFromInventory = async (
 export const getWeekProductionStat = async (
   req: Request, res: Response
 ) => {
-
+  var arr = new Array();
   let obj = {
-    labels:moment.weekdays(1),
+    labels:arr,
     datasets:[
     {data:[],label:'Big Bag'},
     {data:[],label:'Produccion'}
@@ -754,7 +754,7 @@ export const getWeekProductionStat = async (
 
 
   for (var m = moment(startOfWeek); m.isBefore(endOfWeek); m.add(1, 'days')) {
-    //obj.labels.push(m.format('dddd'));
+    obj.labels.push(m.format('ddd'));
     console.log(m.format('YYYY-MM-DD'));
 }
 
