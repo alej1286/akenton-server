@@ -731,8 +731,8 @@ export const getWeekProductionStat = async (
   let obj = {
     labels:arr,
     datasets:[
-    {data:[],label:'Big Bag'},
-    {data:[],label:'Produccion'}
+    {data:arr,label:'Big Bag'},
+    {data:arr,label:'Produccion'}
   ]};
 
   /* {
@@ -746,16 +746,23 @@ export const getWeekProductionStat = async (
   var startOfWeek = moment().startOf('isoweek').toDate();
   var endOfWeek   = moment().endOf('isoweek').toDate();
   var m = moment(startOfWeek);
-  const response: QueryResult = await pool.query(
-    "select in_stock from inventory where id = 1"
-  );
+  
+  
 
 
 
 
   for (var m = moment(startOfWeek); m.isBefore(endOfWeek); m.add(1, 'days')) {
     obj.labels.push(m.format('ddd'));
-    console.log(m.format('YYYY-MM-DD'));
+    
+    const response: QueryResult = await pool.query(
+      "select count(*) as bb from (select bigbag from produccion where inicio=$1)",
+    [m.format('YYYY-MM-DD')]
+    );
+
+    obj.datasets[0].data.push(response);
+
+    //console.log(m.format('YYYY-MM-DD'));
 }
 
 
