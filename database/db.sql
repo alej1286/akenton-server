@@ -1,5 +1,5 @@
 /* //delete a backup
-heroku pg:backups:delete b101 --app foo
+heroku pg:backups:delete b001 --app akenton-server
 
 //info sobre backups
 heroku pg:backups --app akenton-server

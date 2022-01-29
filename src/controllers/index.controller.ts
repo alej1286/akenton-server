@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { pool } from "../database";
 import { QueryResult } from "pg";
 
+var moment = require('moment');  
+
 export const getOrders = async (
   req: Request,
   res: Response
@@ -721,3 +723,19 @@ export const substractFromInventory = async (
     //}
   }
 };
+
+export const getWeekProductionStat = async (
+  req: Request, res: Response
+) => {
+
+  var startOfWeek = moment().startOf('isoweek').toDate();
+  var endOfWeek   = moment().endOf('isoweek').toDate();
+  
+  const response: QueryResult = await pool.query(
+    "select in_stock from inventory where id = 1"
+  );
+
+  //return res.json(response.rows);
+  //res.json(`bigbag decreased Successfully`);
+  return res.json({'startOfWeek':startOfWeek,'endOfWeek':endOfWeek});
+}

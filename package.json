@@ -19,6 +19,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "knex": "^0.95.14",
+    "moment": "^2.29.1",
     "pg": "^7.18.2"
   },
   "devDependencies": {
