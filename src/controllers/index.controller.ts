@@ -728,14 +728,39 @@ export const getWeekProductionStat = async (
   req: Request, res: Response
 ) => {
 
+  let obj = {
+    labels:moment.weekdays(),
+    datasets:[
+    {data:[],label:'Big Bag'},
+    {data:[],label:'Produccion'}
+  ]};
+
+  /* {
+    labels: [ 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo' ],
+    datasets: [
+      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Big Bag' },
+      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Produccion' }
+    ]
+  }; */
+
   var startOfWeek = moment().startOf('isoweek').toDate();
   var endOfWeek   = moment().endOf('isoweek').toDate();
-  
+  var m = moment(startOfWeek);
   const response: QueryResult = await pool.query(
     "select in_stock from inventory where id = 1"
   );
 
+
+
+
+  for (var m = moment(startOfWeek); m.isBefore(endOfWeek); m.add(1, 'days')) {
+    obj.labels.push(m.format('dddd'));
+    console.log(m.format('YYYY-MM-DD'));
+}
+
+
+
   //return res.json(response.rows);
   //res.json(`bigbag decreased Successfully`);
-  return res.json({'startOfWeek':startOfWeek,'endOfWeek':endOfWeek});
+  return res.json(obj);
 }
