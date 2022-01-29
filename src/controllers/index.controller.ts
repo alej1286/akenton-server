@@ -729,7 +729,7 @@ export const getWeekProductionStat = async (
 ) => {
 
   let obj = {
-    labels:[],
+    labels:moment.weekdays(true),
     datasets:[
     {data:[],label:'Big Bag'},
     {data:[],label:'Produccion'}
