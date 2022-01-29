@@ -760,7 +760,7 @@ export const getWeekProductionStat = async (
     [m.format('YYYY-MM-DD')]
     );
 
-    obj.datasets[0].data.push(response);
+    obj.datasets[0].data.push(response.rows);
 
     //console.log(m.format('YYYY-MM-DD'));
 }
