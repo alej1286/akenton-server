@@ -754,7 +754,7 @@ export const getWeekProductionStat = async (
 
 
   for (var m = moment(startOfWeek); m.isBefore(endOfWeek); m.add(1, 'days')) {
-    obj.labels.push(m.format('dddd'));
+    //obj.labels.push(m.format('dddd'));
     console.log(m.format('YYYY-MM-DD'));
 }
 
