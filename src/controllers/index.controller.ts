@@ -741,6 +741,7 @@ export const getWeekProductionStat = async (
   var arr = new Array();
   var dataBb = new Array();
   var dataProd = new Array();
+
   let obj = {
     labels:arr,
     datasets:[
@@ -758,6 +759,10 @@ export const getWeekProductionStat = async (
 
   var startOfWeek = moment().startOf('isoweek').toDate();
   var endOfWeek   = moment().endOf('isoweek').toDate();
+  console.log('startOfWeek:',startOfWeek.format('YYYY-MM-DD'));
+  console.log('endOfWeek:',endOfWeek.format('YYYY-MM-DD'));
+  
+  
   var m = moment(startOfWeek);
 
   for (var m = moment(startOfWeek); m.isBefore(endOfWeek); m.add(1, 'days')) {
