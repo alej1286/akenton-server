@@ -774,7 +774,7 @@ export const getWeekProductionStat = async (
     var next = m;
     const response: QueryResult = await pool.query(
       "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
-      ,[m.format('YYYY-MM-DD'),next.add(1,'days').format('YYYY-MM-DD')]
+      ,[m.format('YYYY-MM-DD'),next.format('YYYY-MM-DD')]
     );
       console.log("select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between "+m.format('YYYY-MM-DD')+" and "+next.add(1,'days').format('YYYY-MM-DD')+") as bb");
     dataBb.push(response.rows[0].count)
