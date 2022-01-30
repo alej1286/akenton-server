@@ -1,7 +1,7 @@
 import {Router} from 'express';
 const router = Router();
 
-import { getOrders, getOrderById, createOrder, updateOrder, deleteOrder, getTipos, getTipoById, createTipo, updateTipo, deleteTipo, getClients, getClientById, createClient, updateClient, deleteClient, getEstados, getEstadoById, createEstado, updateEstado, deleteEstado, getInventories, getInventoryById, createInventory, updateInventory, deleteInventory, getProduccion, getProduccionById, createProduccion, updateProduccion, deleteProduccion, getBigbag, getBigbagById, createBigbag, updateBigbag, deletebigbag, decreaseBigbag, getBigbagInStock, getWeekProductionStat } from '../controllers/index.controller';
+import { getOrders, getOrderById, createOrder, updateOrder, deleteOrder, getTipos, getTipoById, createTipo, updateTipo, deleteTipo, getClients, getClientById, createClient, updateClient, deleteClient, getEstados, getEstadoById, createEstado, updateEstado, deleteEstado, getInventories, getInventoryById, createInventory, updateInventory, deleteInventory, getProduccion, getProduccionById, createProduccion, updateProduccion, deleteProduccion, getBigbag, getBigbagById, createBigbag, updateBigbag, deletebigbag, decreaseBigbag, getBigbagInStock, getWeekProductionStat, getBigbagCounted } from '../controllers/index.controller';
 
 router.get('/', (req, res) => {
     res.send('<h1>This is the main /</h1>');
@@ -51,6 +51,7 @@ router.put('/bigbag/:id', updateBigbag)
 router.delete('/bigbag/:id', deletebigbag);
 router.get('/decreasebigbag', decreaseBigbag);
 router.get('/getbigbaginstock', getBigbagInStock);
+router.get('/getBigbagCounted', getBigbagCounted);
 router.get('/getweekproductionstat', getWeekProductionStat);
 
 

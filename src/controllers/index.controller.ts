@@ -434,6 +434,17 @@ export const decreaseBigbag = async (
   //res.json(`bigbag decreased Successfully`);
 }
 
+export const getBigbagCounted = async (
+  req: Request, res: Response
+) => {
+  const response2: QueryResult = await pool.query(
+    "select * from variables where id = 1"
+  );
+
+  return res.json(response2.rows);
+  //res.json(`bigbag decreased Successfully`);
+}
+
 export const getBigbagInStock = async (
   req: Request, res: Response
 ) => {
@@ -756,14 +767,14 @@ export const getWeekProductionStat = async (
     obj.labels.push(m.format('ddd'));
     
     const response: QueryResult = await pool.query(
-      "select count(*) from (select bigbag from produccion where inicio=$1) as bb",
+      "select count(*) from (select bigbag from produccion where inicio between '$1' and '$1') as bb",
     [m.format('YYYY-MM-DD')]
     );
 
     obj.datasets[0].data.push(response.rows);
 
     //console.log(m.format('YYYY-MM-DD'));
-}
+  }
 
 
 
