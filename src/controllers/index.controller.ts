@@ -757,8 +757,6 @@ export const getWeekProductionStat = async (
   var startOfWeek = moment().startOf('isoweek').toDate();
   var endOfWeek   = moment().endOf('isoweek').toDate();
   var m = moment(startOfWeek);
-  
-  
 
   for (var m = moment(startOfWeek); m.isBefore(endOfWeek); m.add(1, 'days')) {
     obj.labels.push(m.format('ddd'));
@@ -772,7 +770,7 @@ export const getWeekProductionStat = async (
       ,[(m.format('YYYY-MM-DD')),next.add(1,'days').format('YYYY-MM-DD')]
     );
 
-    obj.datasets[0].data.push(response.rows);
+    obj.datasets[0].data.push(response.rows[0].count);
 
     //console.log(m.format('YYYY-MM-DD'));
   }
