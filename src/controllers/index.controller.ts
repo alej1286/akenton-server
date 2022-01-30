@@ -767,7 +767,7 @@ export const getWeekProductionStat = async (
     obj.labels.push(m.format('ddd'));
     var next = m;
     const response: QueryResult = await pool.query(
-      "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between '$1' and '$2') as bb"
+      "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between TIMESTAMP'$1' and TIMESTAMP '$2') as bb"
       ,[m.format('YYYY-MM-DD'),next.add(1,'days').format('YYYY-MM-DD')]
     );
 
