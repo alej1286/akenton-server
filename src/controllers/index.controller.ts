@@ -735,12 +735,25 @@ export const substractFromInventory = async (
   }
 };
 
+export function getMonday(d: string | number | Date) {
+  d = new Date(d);
+  var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+  return new Date(d.setDate(diff));
+}
+
 export const getWeekProductionStat = async (
   req: Request, res: Response
 ) => {
   var arr = new Array();
   var dataBb = new Array();
   var dataProd = new Array();
+
+  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+/* const d = new Date(); */
+
+
 
   let obj = {
     labels:arr,
@@ -757,19 +770,35 @@ export const getWeekProductionStat = async (
     ]
   }; */
 
-  var startOfWeek = moment().startOf('isoweek').toDate();
-  var endOfWeek   = moment().endOf('isoweek').toDate();
+  //var startOfWeek = moment().startOf('isoweek').toDate();
+  var startOfWeek = getMonday(new Date());
+  //var endOfWeek   = moment().endOf('isoweek').toDate();
+  var endOfWeek   = new Date();
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+  
   console.log('startOfWeek:',startOfWeek);
   console.log('endOfWeek:',endOfWeek);
   
   
   var m = moment(startOfWeek);
-
+/* 
   for (var m = moment(startOfWeek); m.isBefore(endOfWeek); m.add(1, 'days')) {
     obj.labels.push(m.format('ddd'));
-  }
+  } */
 
-  for (var m = moment(startOfWeek); m.diff(endOfWeek, 'days') <= 0; m.add(1, 'days')) {
+  for (var d = startOfWeek; d < endOfWeek; d.setDate(d.getDate() + 1)) {
+    console.log(weekday[d.getDay()]);
+    obj.labels.push(weekday[d.getDay()]);
+    const response: QueryResult = await pool.query(
+      "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
+      ,[d.getDate(),d.getDate()+1]
+    );
+    
+    dataBb.push(parseInt(response.rows[0].count));
+
+  }
+  
+  /* for (var m = moment(startOfWeek); m.diff(endOfWeek, 'days') <= 0; m.add(1, 'days')) {
     console.log("m.format('YYYY-MM-DD'):",m.format('YYYY-MM-DD'));
     var next = moment(m);
     const response: QueryResult = await pool.query(
@@ -780,7 +809,7 @@ export const getWeekProductionStat = async (
     dataBb.push(response.rows[0].count)
 
     //console.log(m.format('YYYY-MM-DD'));
-  }
+  } */
 
   obj.datasets[0].data = dataBb;
   obj.datasets[1].data = dataProd;
