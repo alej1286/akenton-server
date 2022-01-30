@@ -739,6 +739,8 @@ export const getWeekProductionStat = async (
   req: Request, res: Response
 ) => {
   var arr = new Array();
+  var dataBb = new Array();
+  var dataProd = new Array();
   let obj = {
     labels:arr,
     datasets:[
@@ -770,10 +772,13 @@ export const getWeekProductionStat = async (
       ,[(m.format('YYYY-MM-DD')),next.add(1,'days').format('YYYY-MM-DD')]
     );
 
-    obj.datasets[0].data.push(response.rows[0].count);
+    dataBb.push(response.rows[0].count)
 
     //console.log(m.format('YYYY-MM-DD'));
   }
+
+  obj.datasets[0].data = dataBb;
+  obj.datasets[1].data = dataProd;
 
 
 
