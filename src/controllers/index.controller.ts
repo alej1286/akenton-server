@@ -770,7 +770,7 @@ export const getWeekProductionStat = async (
   }
 
   for (var m = moment(startOfWeek); m.isBefore(endOfWeek); m.add(1, 'days')) {
-    
+    console.log("m.format('YYYY-MM-DD'):",m.format('YYYY-MM-DD'));
     var next = m;
     const response: QueryResult = await pool.query(
       "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
