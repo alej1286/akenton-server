@@ -793,6 +793,9 @@ export const getWeekProductionStat = async (
       "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
       ,[d.toISOString(),d.toISOString()+1]
     );
+
+    console.log("select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between "+d.toISOString()+" and "+(d.toISOString()+1)+") as bb");
+    
     
     //format(new Date("2020-01-01"), "MMMM do yyyy")
     dataBb.push(parseInt(response.rows[0].count));
