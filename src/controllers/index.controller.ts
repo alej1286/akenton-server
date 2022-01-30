@@ -759,8 +759,8 @@ export const getWeekProductionStat = async (
 
   var startOfWeek = moment().startOf('isoweek').toDate();
   var endOfWeek   = moment().endOf('isoweek').toDate();
-  console.log('startOfWeek:',startOfWeek.format('YYYY-MM-DD'));
-  console.log('endOfWeek:',endOfWeek.format('YYYY-MM-DD'));
+  console.log('startOfWeek:',startOfWeek);
+  console.log('endOfWeek:',endOfWeek);
   
   
   var m = moment(startOfWeek);
