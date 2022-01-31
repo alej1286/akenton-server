@@ -875,18 +875,13 @@ export const getWeekProductionStat = async (
       ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
     );
 
+    let poundsSum = 0;
     for (var i = 0; i < responseProd.rows.length; i++) {
-      
-      for (var i = 0; i < responseProd.rows.length; i++) {
-        
-        
-        dataProd.push(getPoundsByType(parseInt(responseProd.rows[i].tipo),parseInt(responseProd.rows[i].cantidad)));
+      poundsSum+=getPoundsByType(parseInt(responseProd.rows[i].tipo),parseInt(responseProd.rows[i].cantidad));
         /* console.log('tipo:',responseProd.rows[i].tipo);
         console.log('cantidad:',responseProd.rows[i].cantidad); */
-      }
-      
     }
-    
+    dataProd.push(poundsSum);
   }
   
   obj.datasets[0].data = dataBb;
