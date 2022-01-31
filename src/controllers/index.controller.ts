@@ -787,9 +787,13 @@ export const getWeekProductionStat = async (
   } */
 
   for (var d = startOfWeek; d <= endOfWeek; d.setDate(d.getDate() + 1)) {
-    console.log(d.getDate());
+    
     let next = new Date();
     next.setDate(d.getDate() + 1);
+
+    console.log(d.getDate());
+    console.log(next.getDate());
+
     console.log(weekday[d.getDay()]);
     obj.labels.push(weekday[d.getDay()]);
 
