@@ -217,6 +217,19 @@ export const updateOrder = async (req: Request, res: Response) => {
     "UPDATE orders SET client = $1, tipo = $2, cantidad = $3, descr = $4, recogida = $6, estado = $7, terminada = $8 WHERE id = $5",
     [client, tipo, cantidad, descr, id, recogida, estado, terminada]
   );
+
+  if (parseInt(estado) === 3) {
+    const responseCopy = await pool.query(
+      "INSERT INTO orders (id, client, tipo, cantidad, recogida, descr, estado, terminada) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+    [id, client, tipo, cantidad,recogida ,descr, estado, terminada]
+    );
+
+    const responseDelete = await pool.query(
+      "DELETE FROM orders WHERE id = $1",
+      [id]
+    );
+  }
+
   res.json("Order Updated Successfully");
 };
 

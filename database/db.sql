@@ -160,3 +160,19 @@ INSERT INTO variables(nombre, val)
     VALUES  ('bigbag',1);
 
 select * from variables;
+
+DROP TABLE IF EXISTS ordersBackup CASCADE;
+
+CREATE TABLE ordersBackup (
+    id SERIAL PRIMARY KEY,
+    client integer,
+    tipo integer,
+    cantidad integer,
+    recogida timestamp default NULL,
+    terminada timestamp default NULL,
+    descr VARCHAR(40),
+    estado integer,
+    CONSTRAINT fk_tipo_order FOREIGN KEY(tipo) REFERENCES tipo(id),
+    CONSTRAINT fk_client_order FOREIGN KEY(client) REFERENCES client(id),
+    CONSTRAINT fk_estado_order FOREIGN KEY(estado) REFERENCES estado(id)
+);
