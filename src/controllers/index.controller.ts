@@ -807,7 +807,16 @@ export const getWeekProductionStat = async (
       "select * from produccion where inicio between $1 and $2"
       ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
     );
-      console.log(responseProd.rows);
+
+    for (var i = 0; i < responseProd.rows.length; i++) {
+      for (obj of responseProd.rows[i]) {
+        console.log('tipo:',obj.tipo);
+        console.log('cantidad:',obj.cantidad);
+      
+      }
+    }
+    
+      
     //dataProd.push(parseInt(responseProd.rows[0].count));
 
   }
