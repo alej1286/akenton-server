@@ -786,16 +786,18 @@ export const getWeekProductionStat = async (
     obj.labels.push(m.format('ddd'));
   } */
 
-  for (var d = startOfWeek; d < endOfWeek; d.setDate(d.getDate() + 1)) {
+  for (var d = startOfWeek; d <= endOfWeek; d.setDate(d.getDate() + 1)) {
+    let next = new Date();
+    next.setDate(d.getDate() + 1);
     console.log(weekday[d.getDay()]);
     obj.labels.push(weekday[d.getDay()]);
     const response: QueryResult = await pool.query(
       "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
-      ,[d.toISOString().slice(0, 19).replace('T', ' '),(d.toISOString()+1).slice(0, 19).replace('T', ' ')]
+      ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
     );
     /* d.toISOString(),d.toISOString()+1 */
 
-    console.log("select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between "+d.toISOString().slice(0, 19).replace('T', ' ')+" and "+(d.toISOString()+1).slice(0, 19).replace('T', ' ')+") as bb");
+    console.log("select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between "+d.toISOString().slice(0, 19).replace('T', ' ')+" and "+next.toISOString().slice(0, 19).replace('T', ' ')+") as bb");
     
     
     //format(new Date("2020-01-01"), "MMMM do yyyy")
