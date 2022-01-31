@@ -213,10 +213,7 @@ export const updateOrder = async (req: Request, res: Response) => {
   const { client, tipo, cantidad, descr, recogida, estado, terminada } =
     req.body;
 
-  const response = await pool.query(
-    "UPDATE orders SET client = $1, tipo = $2, cantidad = $3, descr = $4, recogida = $6, estado = $7, terminada = $8 WHERE id = $5",
-    [client, tipo, cantidad, descr, id, recogida, estado, terminada]
-  );
+  
 
   if (parseInt(estado) === 3) {
     const responseCopy = await pool.query(
@@ -227,6 +224,11 @@ export const updateOrder = async (req: Request, res: Response) => {
     const responseDelete = await pool.query(
       "DELETE FROM orders WHERE id = $1",
       [id]
+    );
+  } else {
+    const response = await pool.query(
+      "UPDATE orders SET client = $1, tipo = $2, cantidad = $3, descr = $4, recogida = $6, estado = $7, terminada = $8 WHERE id = $5",
+      [client, tipo, cantidad, descr, id, recogida, estado, terminada]
     );
   }
 

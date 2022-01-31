@@ -93,10 +93,7 @@ CREATE TABLE orders (
     recogida timestamp default NULL,
     terminada timestamp default NULL,
     descr VARCHAR(40),
-    estado integer,
-    CONSTRAINT fk_tipo_order FOREIGN KEY(tipo) REFERENCES tipo(id),
-    CONSTRAINT fk_client_order FOREIGN KEY(client) REFERENCES client(id),
-    CONSTRAINT fk_estado_order FOREIGN KEY(estado) REFERENCES estado(id)
+    estado integer
 );
 
 INSERT INTO orders(client, tipo, cantidad, recogida, terminada, descr, estado)
@@ -164,15 +161,12 @@ select * from variables;
 DROP TABLE IF EXISTS ordersBackup CASCADE;
 
 CREATE TABLE ordersBackup (
-    id SERIAL PRIMARY KEY,
+    id integer PRIMARY KEY,
     client integer,
     tipo integer,
     cantidad integer,
     recogida timestamp default NULL,
     terminada timestamp default NULL,
     descr VARCHAR(40),
-    estado integer,
-    CONSTRAINT fk_tipo_order FOREIGN KEY(tipo) REFERENCES tipo(id),
-    CONSTRAINT fk_client_order FOREIGN KEY(client) REFERENCES client(id),
-    CONSTRAINT fk_estado_order FOREIGN KEY(estado) REFERENCES estado(id)
+    estado integer
 );
