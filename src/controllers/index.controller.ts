@@ -360,8 +360,8 @@ export const updateProduccion = async (req: Request, res: Response) => {
   const { ordern, tipo, cantidad, inicio, fin, descr, bigbag } = req.body;
 
   const response = await pool.query(
-    "UPDATE produccion SET ordern = $1, tipo = $2, cantidad = $3, inicio = $4, fin = $6, descr = $7, bigbag = $8 WHERE id = $8",
-    [ordern, tipo, cantidad, inicio, fin, descr, id, bigbag]
+    "UPDATE produccion SET ordern = $1, tipo = $2, cantidad = $3, inicio = $4, fin = $5, descr = $6, bigbag = $8 WHERE id = $7",
+                                                  [ordern, tipo, cantidad, inicio, fin, descr, id, bigbag]
   );
   res.json("produccion Updated Successfully");
 };
