@@ -217,7 +217,7 @@ export const updateOrder = async (req: Request, res: Response) => {
 
   if (parseInt(estado) === 3) {
     const responseCopy = await pool.query(
-      "INSERT INTO orders (id, client, tipo, cantidad, recogida, descr, estado, terminada) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+      "INSERT INTO ordersBackup (id, client, tipo, cantidad, recogida, descr, estado, terminada) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
     [id, client, tipo, cantidad,recogida ,descr, estado, terminada]
     );
 
