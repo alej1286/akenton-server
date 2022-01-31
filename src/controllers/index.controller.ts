@@ -791,10 +791,11 @@ export const getWeekProductionStat = async (
     obj.labels.push(weekday[d.getDay()]);
     const response: QueryResult = await pool.query(
       "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
-      ,[d.toISOString(),d.toISOString()+1]
+      ,[d.getDate().toString(),(d.getDate()+1).toString()]
     );
+    /* d.toISOString(),d.toISOString()+1 */
 
-    console.log("select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between "+d.toISOString()+" and "+(d.toISOString()+1)+") as bb");
+    console.log("select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between "+d.getDate().toString()+" and "+(d.getDate()+1).toString())+") as bb");
     
     
     //format(new Date("2020-01-01"), "MMMM do yyyy")
