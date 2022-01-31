@@ -771,6 +771,7 @@ export const getWeekProductionStat = async (
   }; */
 
   //var startOfWeek = moment().startOf('isoweek').toDate();
+  //var startOfWeek = getMonday(new Date());
   var startOfWeek = getMonday(new Date("2022-01-24"));
   //var endOfWeek   = moment().endOf('isoweek').toDate();
   var endOfWeek   = new Date();
@@ -779,9 +780,9 @@ export const getWeekProductionStat = async (
   console.log('startOfWeek:',startOfWeek);
   console.log('endOfWeek:',endOfWeek);
   
-  
+  /*
   var m = moment(startOfWeek);
-/* 
+ 
   for (var m = moment(startOfWeek); m.isBefore(endOfWeek); m.add(1, 'days')) {
     obj.labels.push(m.format('ddd'));
   } */
@@ -790,24 +791,24 @@ export const getWeekProductionStat = async (
     
     let next = new Date();
     next.setDate(d.getDate() + 1);
-
-    console.log(d.getDate());
-    console.log(next.getDate());
-
-    console.log(weekday[d.getDay()]);
     obj.labels.push(weekday[d.getDay()]);
 
-    const response: QueryResult = await pool.query(
+    const responseBB: QueryResult = await pool.query(
       "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
       ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
     );
-    /* d.toISOString(),d.toISOString()+1 */
-
+    /* 
     console.log("select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between "+d.toISOString().slice(0, 19).replace('T', ' ')+" and "+next.toISOString().slice(0, 19).replace('T', ' ')+") as bb");
-    
-    
-    //format(new Date("2020-01-01"), "MMMM do yyyy")
-    dataBb.push(parseInt(response.rows[0].count));
+     */
+    dataBb.push(parseInt(responseBB.rows[0].count)*2200);
+
+
+    const responseProd: QueryResult = await pool.query(
+      "select * from produccion where inicio between $1 and $2"
+      ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
+    );
+      console.log(responseProd.rows);
+    //dataProd.push(parseInt(responseProd.rows[0].count));
 
   }
   
