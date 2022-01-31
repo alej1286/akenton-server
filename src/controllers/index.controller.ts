@@ -787,10 +787,12 @@ export const getWeekProductionStat = async (
   } */
 
   for (var d = startOfWeek; d <= endOfWeek; d.setDate(d.getDate() + 1)) {
+    console.log(d.getDate());
     let next = new Date();
     next.setDate(d.getDate() + 1);
     console.log(weekday[d.getDay()]);
     obj.labels.push(weekday[d.getDay()]);
+
     const response: QueryResult = await pool.query(
       "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
       ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
