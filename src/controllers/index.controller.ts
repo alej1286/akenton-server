@@ -742,6 +742,74 @@ export function getMonday(d: string | number | Date) {
   return new Date(d.setDate(diff));
 }
 
+export function getPoundsByType(type: number,quantity:number) {
+
+  let pounds = 0;
+
+  if (type === 1) {
+    pounds = 1.5 * quantity;  
+  }
+
+  if (type === 2) {
+    pounds = 1.5 * quantity;  
+  }
+
+  if (type === 3) {
+    pounds = 3 * quantity;  
+  }
+
+  if (type === 4) {
+    pounds = 5 * quantity;  
+  }
+
+  if (type === 5) {
+    pounds = 2.7 * quantity;  
+  }
+
+  if (type === 6) {
+    pounds = 1.5 * 12 * quantity;  
+  }
+
+  if (type === 7) {
+    pounds = 1.5 * 12 * quantity;  
+  }
+
+  if (type === 8) {
+    pounds = 3 * 9 * quantity;  
+  }
+
+  if (type === 9) {
+    pounds = 5 * 4 * quantity;  
+  }
+
+  if (type === 10) {
+    pounds = 2.7 * 6 * quantity;  
+  }
+
+  if (type === 11) {
+    pounds = 1.5 * 12 * 80 * quantity;  
+  }
+
+  if (type === 12) {
+    pounds = 1.5 * 12 * 80 * quantity;  
+  }
+
+  if (type === 13) {
+    pounds = 3 * 9 * 72 * quantity;  
+  }
+
+  if (type === 14) {
+    pounds = 5 * 4 * 60 * quantity;  
+  }
+
+  if (type === 16) {
+    pounds = 1.5 * 12 * 80 * quantity;  
+  }
+
+  return pounds;
+
+}
+
 export const getWeekProductionStat = async (
   req: Request, res: Response
 ) => {
@@ -798,9 +866,7 @@ export const getWeekProductionStat = async (
       "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
       ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
     );
-    /* 
-    console.log("select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between "+d.toISOString().slice(0, 19).replace('T', ' ')+" and "+next.toISOString().slice(0, 19).replace('T', ' ')+") as bb");
-     */
+    
     dataBb.push(parseInt(responseBB.rows[0].count)*2200);
 
 
@@ -812,30 +878,17 @@ export const getWeekProductionStat = async (
     for (var i = 0; i < responseProd.rows.length; i++) {
       
       for (var i = 0; i < responseProd.rows.length; i++) {
-         console.log('tipo:',responseProd.rows[i].tipo);
-        console.log('cantidad:',responseProd.rows[i].cantidad);
+        
+        
+        dataProd.push(getPoundsByType(parseInt(responseProd.rows[i].tipo),parseInt(responseProd.rows[i].cantidad)));
+        /* console.log('tipo:',responseProd.rows[i].tipo);
+        console.log('cantidad:',responseProd.rows[i].cantidad); */
       }
       
     }
     
-      
-    //dataProd.push(parseInt(responseProd.rows[0].count));
-
   }
   
-  /* for (var m = moment(startOfWeek); m.diff(endOfWeek, 'days') <= 0; m.add(1, 'days')) {
-    console.log("m.format('YYYY-MM-DD'):",m.format('YYYY-MM-DD'));
-    var next = moment(m);
-    const response: QueryResult = await pool.query(
-      "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
-      ,[m.format('YYYY-MM-DD'),next.add(1,'days').format('YYYY-MM-DD')]
-    );
-      console.log("select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between "+m.format('YYYY-MM-DD')+" and "+next.add(1,'days').format('YYYY-MM-DD')+") as bb");
-    dataBb.push(response.rows[0].count)
-
-    //console.log(m.format('YYYY-MM-DD'));
-  } */
-
   obj.datasets[0].data = dataBb;
   obj.datasets[1].data = dataProd;
 
