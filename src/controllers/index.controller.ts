@@ -792,7 +792,8 @@ export const getWeekProductionStat = async (
     let next = new Date();
     next.setDate(d.getDate() + 1);
     obj.labels.push(weekday[d.getDay()]);
-
+    console.log(weekday[d.getDay()]);
+    
     const responseBB: QueryResult = await pool.query(
       "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
       ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
@@ -810,8 +811,9 @@ export const getWeekProductionStat = async (
 
     for (var i = 0; i < responseProd.rows.length; i++) {
       for (obj of responseProd.rows[i]) {
-        console.log('tipo:',obj.tipo);
-        console.log('cantidad:',obj.cantidad);
+        console.log('obj:',obj);
+        //console.log('tipo:',obj.tipo);
+        //console.log('cantidad:',obj.cantidad);
       
       }
     }
