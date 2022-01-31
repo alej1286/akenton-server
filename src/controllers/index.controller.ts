@@ -883,12 +883,15 @@ export const getWeekProductionStat = async (
     );
     console.log('responseBB.rows[0].count:',responseBB.rows[0].count);
     dataBb.push(parseInt(responseBB.rows[0].count)*2200);
+    
+    console.log(`select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between ${d.toISOString().slice(0, 19).replace('T', ' ')} and ${next.toISOString().slice(0, 19).replace('T', ' ')}) as bb`);
 
 
     const responseProd: QueryResult = await pool.query(
       "select * from produccion where inicio between $1 and $2"
       ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
     );
+    console.log(`select * from produccion where inicio between ${d.toISOString().slice(0, 19).replace('T', ' ')} and ${next.toISOString().slice(0, 19).replace('T', ' ')}`);
 
     
     let poundsSum = 0;
