@@ -881,7 +881,7 @@ export const getWeekProductionStat = async (
       "select COUNT(DISTINCT bigbag)  from (select * from produccion where inicio between $1 and $2) as bb"
       ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
     );
-    
+    console.log('responseBB.rows[0].count:',responseBB.rows[0].count);
     dataBb.push(parseInt(responseBB.rows[0].count)*2200);
 
 
@@ -890,11 +890,12 @@ export const getWeekProductionStat = async (
       ,[d.toISOString().slice(0, 19).replace('T', ' '),next.toISOString().slice(0, 19).replace('T', ' ')]
     );
 
+    
     let poundsSum = 0;
     for (var i = 0; i < responseProd.rows.length; i++) {
       poundsSum+=getPoundsByType(parseInt(responseProd.rows[i].tipo),parseInt(responseProd.rows[i].cantidad));
-        /* console.log('tipo:',responseProd.rows[i].tipo);
-        console.log('cantidad:',responseProd.rows[i].cantidad); */
+        console.log('tipo:',responseProd.rows[i].tipo);
+        console.log('cantidad:',responseProd.rows[i].cantidad);
     }
     dataProd.push(poundsSum);
   }
