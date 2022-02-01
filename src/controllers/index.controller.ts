@@ -854,8 +854,8 @@ export const getWeekProductionStat = async (
   }; */
 
   //var startOfWeek = moment().startOf('isoweek').toDate();
-  var startOfWeek = getMonday(new Date());
-  startOfWeek.setHours(0,0,0,0);
+  var startOfWeek = getMonday(new Date().setHours(0, 0, 0, 0));
+  
   //var startOfWeek = getMonday(new Date("2022-01-24"));
   //var endOfWeek   = moment().endOf('isoweek').toDate();
   var endOfWeek   = new Date();
