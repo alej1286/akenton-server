@@ -860,7 +860,7 @@ export const getWeekProductionStat = async (
   //var endOfWeek   = moment().endOf('isoweek').toDate();
   var endOfWeek   = new Date();
   endOfWeek.setDate(startOfWeek.getDate() + 6);
-  
+  endOfWeek.setHours(23, 59, 0, 0)
   console.log('startOfWeek:',startOfWeek);
   console.log('endOfWeek:',endOfWeek);
   
