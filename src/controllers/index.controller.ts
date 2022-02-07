@@ -10,7 +10,7 @@ export const getOrders = async (
 ): Promise<Response> => {
   try {
     const response: QueryResult = await pool.query(
-      "SELECT * FROM orders ORDER BY id ASC"
+      "SELECT * FROM orders WHERE estado != 3 ORDER BY id ASC"
     );
     return res.status(200).json(response.rows);
   } catch (e) {
