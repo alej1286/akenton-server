@@ -197,7 +197,7 @@ export const createClient = async (req: Request, res: Response) => {
 export const createInventory = async (req: Request, res: Response) => {
   const { nombre, in_stock, notify } = req.body;
   const response = await pool.query(
-    "INSERT INTO client (nombre,in_stock, notify) VALUES ($1,$2,$3)",
+    "INSERT INTO inventory (nombre,in_stock, notify) VALUES ($1,$2,$3)",
     [nombre, in_stock, notify]
   );
   res.json({
