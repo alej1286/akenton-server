@@ -490,6 +490,17 @@ export const substractFromInventory = async (
     //}
   }
 
+  if (tipoCont === 16) {
+    //Bolsa 1.5Lbs Nat Mi patria
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Bolsas 1.5Lb Nat
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 31",
+        [cantTipoCont]
+      );
+    //}
+  }
+
   if (tipoCont === 2) {
     //Bolsa 1.5Lbs Org
     //for (let index = 0; index < cantTipoCont; index++) {
@@ -545,6 +556,22 @@ export const substractFromInventory = async (
       //Bolsas 1.5Lb Nat
       await pool.query(
         "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 3",
+        [cantTipoCont * 12]
+      );
+    //}
+  }
+
+  if (tipoCont === 18) {
+    //Caja 1.5Lbs Nat Mi Patria
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Caja
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont]
+      );
+      //Bolsas 1.5Lb Nat Mi Patria
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 31",
         [cantTipoCont * 12]
       );
     //}
@@ -642,6 +669,29 @@ export const substractFromInventory = async (
       //bolsas 1.5Lb nat
       await pool.query(
         "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 3",
+        [cantTipoCont * 80 * 12]
+      );
+    //}
+  }
+
+  if (tipoCont === 17) {
+    //Pallet 1.5Lbs Nat Mi Patria
+    //for (let index = 0; index < cantTipoCont; index++) {
+      //Pallet
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 10",
+        [cantTipoCont]
+      );
+
+      //Cajas
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 2",
+        [cantTipoCont * 80]
+      );
+
+      //bolsas 1.5Lb nat Mi Patria
+      await pool.query(
+        "UPDATE inventory SET in_stock = in_stock - $1 WHERE id = 31",
         [cantTipoCont * 80 * 12]
       );
     //}
@@ -765,6 +815,10 @@ export function getPoundsByType(type: number,quantity:number) {
     pounds = 1.5 * quantity;  
   }
 
+  if (type === 16) {
+    pounds = 1.5 * quantity;  
+  }
+
   if (type === 2) {
     pounds = 1.5 * quantity;  
   }
@@ -785,6 +839,10 @@ export function getPoundsByType(type: number,quantity:number) {
     pounds = 1.5 * 12 * quantity;  
   }
 
+  if (type === 18) {
+    pounds = 1.5 * 12 * quantity;  
+  }
+
   if (type === 7) {
     pounds = 1.5 * 12 * quantity;  
   }
@@ -802,6 +860,10 @@ export function getPoundsByType(type: number,quantity:number) {
   }
 
   if (type === 11) {
+    pounds = 1.5 * 12 * 80 * quantity;  
+  }
+
+  if (type === 17) {
     pounds = 1.5 * 12 * 80 * quantity;  
   }
 
